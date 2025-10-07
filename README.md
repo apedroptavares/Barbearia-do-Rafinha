@@ -1,2 +1,2 @@
-# Barbearia-do-Rafinha
-Site que estou criando para uma barbearia de um amigo.
+# Site para Barbearia
+Site que estou criando para barbearias.

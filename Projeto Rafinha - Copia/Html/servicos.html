@@ -1,0 +1,237 @@
+<?php
+session_start();
+if (!isset($_SESSION['user'])) {
+    header('Location: ../Html/login.html');
+    exit();
+}
+?>
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rafinha do Corte - Barbearia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="shotcut icon" type="image/png" href="/Img/Rafinha do corte logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 40px;
+            right: 40px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 3px #999;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .active-tab {
+            border-bottom: 3px solid #f59e0b;
+            font-weight: 600;
+        }
+        
+        .booking-form input, .booking-form select {
+            border: 1px solid #e5e7eb;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            width: 100%;
+        }
+        
+        .booking-form input:focus, .booking-form select:focus {
+            outline: none;
+            border-color: #f59e0b;
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+        }
+        
+        .auth-form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- WhatsApp Float Button -->
+    <a href="https://wa.me/99999999999" class="whatsapp-float" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <img class="h-16 w-20" src="/Img/Rafinha do corte logo.png" alt="Logo Rafinha do Corte">
+                        <span class="ml-2 text-xl font-bold text-gray-800">Rafinha do Corte</span>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="/Html/home.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-800 hover:bg-gray-100" id="home-tab">Home</a>
+                        <a href="/Html/servicos.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-800 hover:bg-gray-100 active-tab" id="services-tab">Serviços</a>
+                        <a href="/Html/agendamento.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-800 hover:bg-gray-100" id="booking-tab">Agendamento</a>
+                        <a href="/Html/sobre.html" class="px-3 py-2 rounded-md text-sm font-medium text-gray-800 hover:bg-gray-100" id="about-tab">Sobre</a>
+                       
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-800 hover:text-gray-600">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div class="md:hidden hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white">
+                <a href="/Html/home.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-gray-100">Home</a>
+                <a href="/Html/servicos.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-gray-100">Serviços</a>
+                <a href="/Html/agendamento.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-gray-100">Agendamento</a>
+                <a href="/Html/sobre.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-800 hover:bg-gray-100">Sobre</a>
+                
+            </div>
+        </div>
+    </nav>
+
+
+<main>
+        <!-- Services Section -->
+        <section id="services" class="py-12 px-4 bg-gray-100">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Nossos Serviços</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Service 1 -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden service-card transition duration-300">
+                        <img src="/Img/Corte img.png" alt="Corte de Cabelo" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Corte Moderno</h3>
+                            <p class="text-gray-600 mb-4">Corte moderno com técnicas atualizadas para deixar você no estilo.</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-amber-500 font-bold text-lg">R$ 30,00</span>
+                                <button onclick="window.location.href='agendamento.html'" class="bg-amber-500 hover:bg-amber-600 text-white py-2 px-4 rounded transition duration-300">Agendar</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Service 2 -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden service-card transition duration-300">
+                        <img src="/Img/Tesoura img.png" alt="Pacote Premium" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Tesoura</h3>
+                            <p class="text-gray-600 mb-4">Corte na Tesoura.</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-amber-500 font-bold text-lg">R$ 40,00</span>
+                                <button onclick="window.location.href='agendamento.html'" class="bg-amber-500 hover:bg-amber-600 text-white py-2 px-4 rounded transition duration-300">Agendar</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Service 3 -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden service-card transition duration-300">
+                        <img src="/Img/Corte Simples.png" alt="Hidratação" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Corte Simples</h3>
+                            <p class="text-gray-600 mb-4">Cortes mais Simples</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-amber-500 font-bold text-lg">R$ 25,00</span>
+                                <button onclick="window.location.href='agendamento.html'" class="bg-amber-500 hover:bg-amber-600 text-white py-2 px-4 rounded transition duration-300">Agendar</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Service 4 -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden service-card transition duration-300">
+                        <img src="/Img/Barba img.png" alt="Barba" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Barba</h3>
+                            <p class="text-gray-600 mb-4">Aparo e desenho de barba.</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-amber-500 font-bold text-lg">R$ 20,00</span>
+                                <button onclick="window.location.href='agendamento.html'" class="bg-amber-500 hover:bg-amber-600 text-white py-2 px-4 rounded transition duration-300">Agendar</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Service 5 -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden service-card transition duration-300">
+                        <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=640&q=80" alt="Corte + Barba" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Corte + Barba</h3>
+                            <p class="text-gray-600 mb-4">Pacote completo com corte de cabelo e barba para renovar seu visual.</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-amber-500 font-bold text-lg">R$ 60,00</span>
+                                <button onclick="window.location.href='agendamento.html'" class="bg-amber-500 hover:bg-amber-600 text-white py-2 px-4 rounded transition duration-300">Agendar</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Service 6 -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden service-card transition duration-300">
+                        <img src="/Img/Sobrancelha img.png" alt="Sobrancelha" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800 mb-2">Sobrancelha</h3>
+                            <p class="text-gray-600 mb-4">Desenho e modelagem de sobrancelhas para valorizar seu rosto.</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-amber-500 font-bold text-lg">R$ 20,00</span>
+                                <button onclick="window.location.href='agendamento.html'" class="bg-amber-500 hover:bg-amber-600 text-white py-2 px-4 rounded transition duration-300">Agendar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+</main>
+        <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 px-4">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between">
+                <div class="mb-6 md:mb-0">
+                    <h3 class="text-xl font-bold mb-4">Rafinha do Corte</h3>
+                    <p class="text-gray-400">A melhor barbearia da região, com cortes modernos e atendimento personalizado.</p>
+                </div>
+                
+                <div class="mb-6 md:mb-0">
+                    <h3 class="text-xl font-bold mb-4">Contato</h3>
+                    <p class="text-gray-400 mb-2"><i class="fas fa-phone-alt mr-2"></i> +55 (21) 999999999</p>
+                    <p class="text-gray-400 mb-2"><i class="fas fa-envelope mr-2"></i> contato@rafinhadocorte.com</p>
+                    <p class="text-gray-400"><i class="fas fa-map-marker-alt mr-2"></i> Sen Vasconcelos - RJ</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Redes Sociais</h3>
+                    <div class="flex space-x-4">
+                        <a href="https://www.instagram.com/" target="_blank" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-instagram text-1xl"> Barbearia</i>
+                        </a> 
+                    </div>
+                    <div class="flex space-x-4">
+                        <a href="https://www.instagram.com/" target="_blank" class="text-gray-400 hover:text-white transition duration-300">
+                            <i class="fab fa-instagram text-1x1"> Rafinha</i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400">
+                <p>&copy; 2023 Rafinha do Corte. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
